@@ -1,13 +1,13 @@
 package file
 
-import data.Order
+import data.model.Order
 
 /**
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 18/06/2023
  */
 class OrderReaderFile: OrderReader() {
-    override fun getOrderList(): List<Order> {
+    override fun getOrderInput(): List<Order> {
         TODO("Not yet implemented")
     }
 }

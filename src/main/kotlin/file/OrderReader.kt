@@ -1,7 +1,8 @@
 package file
 
 import common.OrderType
-import data.Order
+import data.model.Order
+import java.time.Instant
 
 /**
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
@@ -10,7 +11,7 @@ import data.Order
 abstract class OrderReader {
     /**
      */
-    abstract fun getOrderList(): List<Order>
+    abstract fun getOrderInput(): List<Order>
 
     /**
      */
@@ -22,16 +23,16 @@ abstract class OrderReader {
         val price = values[2].toInt()
         val quantity = values[3].toInt()
 
-        return Order(id, type, price, quantity)
+        return Order(id, Instant.now(), type, price, quantity)
     }
 
     /**
      */
-    private fun parseOrderType(value: String): OrderType {
-        return when (value) {
+    private fun parseOrderType(type: String): OrderType {
+        return when (type) {
             "B" -> OrderType.BUY
             "S" -> OrderType.SELL
-            else -> TODO("Throw exception")
+            else -> throw IllegalArgumentException("Unknown order type $type")
         }
     }
 }
