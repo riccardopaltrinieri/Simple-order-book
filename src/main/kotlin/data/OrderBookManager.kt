@@ -20,8 +20,6 @@ class OrderBookManager(
     /**
      */
     fun storeOrderListNew(orderInput: List<Order>) {
-        orderInput.forEach { order ->
-            repository.insertOrder(order)
-        }
+        orderInput.forEach { order -> repository.insertOrder(order) }
     }
 }

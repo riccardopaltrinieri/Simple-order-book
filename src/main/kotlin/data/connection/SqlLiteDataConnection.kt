@@ -18,7 +18,7 @@ object SqlLiteDataConnection {
     }
 
     private fun createConnection(): Connection {
-        val jdbcUrl = "jdbc:sqlite:/src/main/resources/database.db"
+        val jdbcUrl = "jdbc:sqlite:src/main/resources/database.sqlite"
 
         return DriverManager.getConnection(jdbcUrl)
     }

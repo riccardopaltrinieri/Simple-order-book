@@ -18,16 +18,16 @@ class OrderSqlRepository(
     /**
      */
     override fun insertOrder(order: Order) {
-        val sql = "INSERT INTO main.order (id, created_at, type, price, quantity)" +
+        val sql = "INSERT INTO `order` (id, created_at, type, price, quantity)" +
                 " VALUES (?, ?, ?, ?, ?);"
         val statement: PreparedStatement = connection.prepareStatement(sql)
 
         try {
             statement.setString(1, order.getId())
             statement.setTimestamp(2, java.sql.Timestamp(Instant.now().epochSecond))
-            statement.setInt(2, order.getType().ordinal)
-            statement.setInt(3, order.getPrice())
-            statement.setInt(4, order.getQuantity())
+            statement.setInt(3, order.getType().ordinal)
+            statement.setInt(4, order.getPrice())
+            statement.setInt(5, order.getQuantity())
             statement.executeUpdate()
 
             statement.close()
@@ -39,7 +39,7 @@ class OrderSqlRepository(
     /**
      */
     override fun getOrderList(): MutableList<Order> {
-        val sql = "SELECT * FROM main.order;"
+        val sql = "SELECT * FROM `order`;"
         val statement: PreparedStatement = connection.prepareStatement(sql)
         val resultSet: ResultSet = statement.executeQuery()
 
