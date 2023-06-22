@@ -15,10 +15,10 @@ class ReaderOrderStdin: ReaderOrder() {
         // Read input until there are no more lines
         while (true) {
             val line = readlnOrNull()
-            if (line != null) {
-                orderList.add(parseOrderFromString(line))
-            } else {
+            if (line.isNullOrEmpty()) {
                 break
+            } else {
+                orderList.add(parseOrderFromString(line))
             }
         }
 

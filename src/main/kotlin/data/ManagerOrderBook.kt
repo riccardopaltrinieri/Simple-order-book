@@ -1,7 +1,7 @@
 package data
 
-import data.repository.RepositoryOrder
 import data.model.Order
+import data.repository.RepositoryOrder
 import data.repository.RepositoryOrderList
 
 /**
