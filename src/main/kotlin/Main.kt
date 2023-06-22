@@ -1,10 +1,20 @@
 import data.ManagerOrderBook
-import file.ReaderOrderStdin
+import file.input.ReaderOrderStdin
+import service.TradeService
 
 fun main(args: Array<String>) {
+    // Read all the orders from stdin
     val orderInput = ReaderOrderStdin().getOrderInput()
-    val orderList = ManagerOrderBook().getOrderList()
-//    TODO("aggressive matching(orderInput, orderList)")
-    ManagerOrderBook().storeOrderListNew(orderInput)
+
+    // Get all the stored orders (not necessary with static storing).
+    val orderListStored = ManagerOrderBook().getOrderList()
+
+    // Perform the aggressive match between the orders
+    val orderListUpdated = TradeService(orderListStored).computeAllPossibleMatch(orderInput)
+
+    // Store the new list of orders
+    ManagerOrderBook().storeOrderListNew(orderListUpdated)
+
+    // Print out the result of the script
 //    TODO("output result")
 }

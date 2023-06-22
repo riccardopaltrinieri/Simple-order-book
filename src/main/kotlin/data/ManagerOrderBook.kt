@@ -19,7 +19,7 @@ class ManagerOrderBook(
 
     /**
      */
-    fun storeOrderListNew(orderInput: List<Order>) {
-        orderInput.forEach { order -> repository.insertOrder(order) }
+    fun storeOrderListNew(orderListNew: List<Order>) {
+        orderListNew.forEach { repository.insertOrder(it) }
     }
 }

@@ -33,4 +33,8 @@ data class Order(
     fun getQuantity(): Int {
         return this.quantity
     }
+
+    fun setQuantity(quantity: Int) {
+        this.quantity = quantity
+    }
 }
