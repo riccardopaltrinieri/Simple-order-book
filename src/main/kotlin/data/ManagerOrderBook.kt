@@ -14,7 +14,7 @@ class ManagerOrderBook(
     /**
      */
     fun getOrderList(): MutableList<Order> {
-        return repository.getOrderList();
+        return repository.getOrderList()
     }
 
     /**

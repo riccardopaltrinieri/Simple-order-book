@@ -6,7 +6,6 @@ import data.model.Order
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
-import java.time.Instant
 
 /**
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>

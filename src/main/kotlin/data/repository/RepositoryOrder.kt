@@ -9,9 +9,9 @@ import data.model.Order
 interface RepositoryOrder {
     /**
      */
-    fun insertOrder(order: Order);
+    fun insertOrder(order: Order)
 
     /**
      */
-    fun getOrderList(): MutableList<Order>;
+    fun getOrderList(): MutableList<Order>
 }
