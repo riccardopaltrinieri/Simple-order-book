@@ -6,10 +6,10 @@ import data.model.Order
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 18/06/2023
  */
-class OrderReaderStdin: OrderReader() {
+class ReaderOrderStdin: ReaderOrder() {
     /**
      */
-    override fun getOrderInput(): List<Order> {
+    override fun getOrderInput(): MutableList<Order> {
         val orderList = mutableListOf<Order>()
 
         // Read input until there are no more lines
@@ -23,5 +23,11 @@ class OrderReaderStdin: OrderReader() {
         }
 
         return orderList
+    }
+
+    /**
+     */
+    override fun getOrderInput(orderStringList: List<String>): MutableList<Order> {
+        TODO("Not yet implemented")
     }
 }

@@ -5,7 +5,7 @@ import java.sql.DriverManager
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 20/06/2023
  */
-object SqlLiteDataConnection {
+object DataConnectionSqlLite {
     private var connection: Connection? = null
 
     fun getConnection(): Connection {
@@ -18,7 +18,7 @@ object SqlLiteDataConnection {
     }
 
     private fun createConnection(): Connection {
-        val jdbcUrl = "jdbc:sqlite:src/main/resources/database.sqlite"
+        val jdbcUrl = "jdbc:sqlite:src/main/resources/database/database.sqlite"
 
         return DriverManager.getConnection(jdbcUrl)
     }

@@ -1,10 +1,10 @@
-import data.OrderBookManager
-import file.OrderReaderStdin
+import data.ManagerOrderBook
+import file.ReaderOrderStdin
 
 fun main(args: Array<String>) {
-    val orderInput = OrderReaderStdin().getOrderInput()
-    val orderList = OrderBookManager().getOrderList()
+    val orderInput = ReaderOrderStdin().getOrderInput()
+    val orderList = ManagerOrderBook().getOrderList()
 //    TODO("aggressive matching(orderInput, orderList)")
-    OrderBookManager().storeOrderListNew(orderInput)
+    ManagerOrderBook().storeOrderListNew(orderInput)
 //    TODO("output result")
 }

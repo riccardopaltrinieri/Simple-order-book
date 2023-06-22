@@ -18,7 +18,6 @@ class RandomOrderGenerator {
             val quantity = random.nextInt( 999999999)
 
             val orderString = listOf(id, type, price, quantity).joinToString(",")
-            println(orderString)
             allOrderString.add(orderString)
         }
 

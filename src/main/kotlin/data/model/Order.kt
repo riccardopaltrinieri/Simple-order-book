@@ -9,13 +9,17 @@ import java.time.Instant
  */
 data class Order(
     private val id: String,
-    private val created_at: Instant,
+    private val createdAt: Instant,
     private val type: OrderType,
     private val price: Int,
-    private val quantity: Int,
+    private var quantity: Int,
 ) {
     fun getId(): String {
         return this.id
+    }
+
+    fun getCreatedAt(): Instant {
+        return this.createdAt
     }
 
     fun getType(): OrderType {

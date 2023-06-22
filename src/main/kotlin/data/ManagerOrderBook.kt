@@ -1,15 +1,15 @@
 package data
 
-import data.repository.OrderRepository
+import data.repository.RepositoryOrder
 import data.model.Order
-import data.repository.OrderSqlRepository
+import data.repository.RepositoryOrderList
 
 /**
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 19/06/2023
  */
-class OrderBookManager(
-    private val repository: OrderRepository = OrderSqlRepository()
+class ManagerOrderBook(
+    private val repository: RepositoryOrder = RepositoryOrderList()
 ) {
     /**
      */

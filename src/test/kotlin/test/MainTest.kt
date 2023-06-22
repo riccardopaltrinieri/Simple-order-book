@@ -1,9 +1,12 @@
 package test
 
 import common.RandomOrderGenerator
-import data.OrderBookManager
-import file.OrderReaderString
-import org.junit.jupiter.api.Test
+import data.ManagerOrderBook
+import data.repository.RepositoryOrderList
+import data.repository.RepositoryOrderSql
+import file.ReaderOrderString
+import kotlin.test.Test
+import kotlin.test.assertContains
 
 /**
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
@@ -11,9 +14,28 @@ import org.junit.jupiter.api.Test
  */
 class MainTest {
     @Test
-    fun testOrderListGenerator() {
+    fun testOrderListInsertAndReadWithRepositoryList() {
+        val managerOrderBook = ManagerOrderBook(RepositoryOrderList())
+
         val orderStringList = RandomOrderGenerator().generateOrderInput(10)
-        val orderInput = OrderReaderString().getOrderInput(orderStringList)
-        OrderBookManager().storeOrderListNew(orderInput)
+        val orderInput = ReaderOrderString().getOrderInput(orderStringList)
+        managerOrderBook.storeOrderListNew(orderInput)
+        val orderListStored = managerOrderBook.getOrderList()
+
+        orderInput.forEach{ order -> assertContains(orderListStored, order) }
+    }
+
+    @Test
+    fun testOrderListInsertAndReadWithRepositorySql() {
+        val managerOrderBook = ManagerOrderBook(RepositoryOrderSql())
+
+        val orderStringList = RandomOrderGenerator().generateOrderInput(0)
+        val orderInput = ReaderOrderString().getOrderInput(orderStringList)
+        managerOrderBook.storeOrderListNew(orderInput)
+        val orderListStored = managerOrderBook.getOrderList()
+
+        orderInput.forEach{ order ->
+            assertContains(orderListStored, order)
+        }
     }
 }

@@ -1,6 +1,6 @@
 package data.repository
 
-import SqlLiteDataConnection
+import DataConnectionSqlLite
 import common.OrderType
 import data.model.Order
 import java.sql.Connection
@@ -12,9 +12,9 @@ import java.time.Instant
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 20/06/2023
  */
-class OrderSqlRepository(
-    private val connection: Connection = SqlLiteDataConnection.getConnection()
-): OrderRepository {
+class RepositoryOrderSql(
+    private val connection: Connection = DataConnectionSqlLite.getConnection()
+): RepositoryOrder {
     /**
      */
     override fun insertOrder(order: Order) {
@@ -24,8 +24,8 @@ class OrderSqlRepository(
 
         try {
             statement.setString(1, order.getId())
-            statement.setTimestamp(2, java.sql.Timestamp(Instant.now().epochSecond))
-            statement.setInt(3, order.getType().ordinal)
+            statement.setTimestamp(2, java.sql.Timestamp(order.getCreatedAt().toEpochMilli()))
+            statement.setString(3, order.getType().name)
             statement.setInt(4, order.getPrice())
             statement.setInt(5, order.getQuantity())
             statement.executeUpdate()
