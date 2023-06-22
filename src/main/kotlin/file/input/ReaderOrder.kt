@@ -1,4 +1,4 @@
-package file
+package file.input
 
 import common.OrderType
 import data.model.Order

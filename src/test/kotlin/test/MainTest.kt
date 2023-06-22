@@ -4,7 +4,7 @@ import common.RandomOrderGenerator
 import data.ManagerOrderBook
 import data.repository.RepositoryOrderList
 import data.repository.RepositoryOrderSql
-import file.ReaderOrderString
+import file.input.ReaderOrderString
 import kotlin.test.Test
 import kotlin.test.assertContains
 

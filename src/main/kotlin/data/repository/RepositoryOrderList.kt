@@ -3,6 +3,10 @@ package data.repository
 import data.model.Order
 
 /**
+ * This repository stores all the orders and trades inside mutable lists. Choose this option if the
+ * software will have to compute everything from a single input file.
+ * In case of multiple input files we need to store everything somewhere: look `RepositoryOrderSql`
+ *
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 22/06/2023
  */

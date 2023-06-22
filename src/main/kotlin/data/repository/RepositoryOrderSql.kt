@@ -8,6 +8,10 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 
 /**
+ * This repository stores all the orders and trades inside a SQLLite file/database. Choose this option if the
+ * software will have to compute everything from multiple input file.
+ * In case of a single input files we need to store everything somewhere: look `RepositoryOrderSql`
+ *
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 20/06/2023
  */
