@@ -14,4 +14,8 @@ interface RepositoryOrder {
     /**
      */
     fun getOrderList(): MutableList<Order>
+
+    /**
+     */
+    fun removeOrder(order: Order)
 }

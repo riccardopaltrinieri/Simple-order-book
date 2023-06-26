@@ -70,4 +70,20 @@ class RepositoryOrderSql(
 
         return orderList
     }
+
+    /**
+     */
+    override fun removeOrder(order: Order) {
+        val sql = "DELETE FROM `order` WHERE id = (?);"
+        val statement: PreparedStatement = connection.prepareStatement(sql)
+
+        try {
+            statement.setString(1, order.getId())
+            statement.executeUpdate()
+
+            statement.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
