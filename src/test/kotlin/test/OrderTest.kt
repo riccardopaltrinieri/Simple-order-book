@@ -12,7 +12,7 @@ import kotlin.test.assertContains
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 20/06/2023
  */
-class MainTest {
+class OrderTest {
     @Test
     fun testOrderListInsertAndReadWithRepositoryList() {
         val managerOrderBook = ManagerOrderBook(RepositoryOrderList())
@@ -22,7 +22,7 @@ class MainTest {
         managerOrderBook.storeOrderListNew(orderInput)
         val orderListStored = managerOrderBook.getOrderList()
 
-        orderInput.forEach{ order -> assertContains(orderListStored, order) }
+        orderInput.forEach{ assertContains(orderListStored, it) }
     }
 
     @Test
@@ -34,8 +34,6 @@ class MainTest {
         managerOrderBook.storeOrderListNew(orderInput)
         val orderListStored = managerOrderBook.getOrderList()
 
-        orderInput.forEach{ order ->
-            assertContains(orderListStored, order)
-        }
+        orderInput.forEach{ assertContains(orderListStored, it) }
     }
 }

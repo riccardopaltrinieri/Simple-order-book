@@ -8,6 +8,8 @@ import java.sql.DriverManager
 object DataConnectionSqlLite {
     private var connection: Connection? = null
 
+    /**
+     */
     fun getConnection(): Connection {
         if (connection == null || connection?.isClosed == true) {
             // Establish a new connection if it doesn't exist or is closed
@@ -17,6 +19,8 @@ object DataConnectionSqlLite {
         return connection!!
     }
 
+    /**
+     */
     private fun createConnection(): Connection {
         val jdbcUrl = "jdbc:sqlite:src/main/resources/database/database.sqlite"
 
