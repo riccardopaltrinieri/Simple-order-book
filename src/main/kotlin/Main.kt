@@ -6,11 +6,8 @@ fun main(args: Array<String>) {
     // Read all the orders from stdin
     val orderInput = ReaderOrderStdin().getOrderInput()
 
-    // Get all the stored orders (not necessary with static storing).
-    val orderListStored = ManagerOrderBook().getOrderList()
-
     // Perform the aggressive match between the orders
-    val orderListUpdated = TradeService(orderListStored).computeAllPossibleMatch(orderInput)
+    val orderListUpdated = TradeService().computeAllPossibleMatch(orderInput)
 
     // Store the new list of orders
     ManagerOrderBook().storeOrderListNew(orderListUpdated)

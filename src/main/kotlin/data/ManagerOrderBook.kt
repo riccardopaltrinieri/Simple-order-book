@@ -22,4 +22,16 @@ class ManagerOrderBook(
     fun storeOrderListNew(orderListNew: List<Order>) {
         orderListNew.forEach { repository.insertOrder(it) }
     }
+
+    /**
+     */
+    fun insertOrderNew(order: Order) {
+        repository.insertOrder(order)
+    }
+
+    /**
+     */
+    fun remove(order: Order) {
+        repository.removeOrder(order)
+    }
 }

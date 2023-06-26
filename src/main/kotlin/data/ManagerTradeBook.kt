@@ -3,7 +3,7 @@ package data
 import data.model.Order
 import data.model.Trade
 import data.repository.RepositoryTrade
-import data.repository.RepositoryTradeSql
+import data.repository.RepositoryTradeList
 import kotlin.math.min
 
 /**
@@ -11,7 +11,7 @@ import kotlin.math.min
  * @date 22/06/2023
  */
 class ManagerTradeBook(
-    private val repository: RepositoryTrade = RepositoryTradeSql()
+    private val repository: RepositoryTrade = RepositoryTradeList()
 ) {
     /**
      */
@@ -19,11 +19,15 @@ class ManagerTradeBook(
         val trade = Trade(
             aggressingOrder.getId(),
             restingOrder.getId(),
-            aggressingOrder.getPrice(),
+            min(aggressingOrder.getPrice(), restingOrder.getPrice()),
             min(aggressingOrder.getQuantity(), restingOrder.getQuantity()),
         )
         repository.insertTrade(trade)
 
         return trade
+    }
+
+    fun getTradeList(): MutableList<Trade> {
+        return repository.getTradeList()
     }
 }
