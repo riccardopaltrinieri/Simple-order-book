@@ -16,5 +16,5 @@ fun main(args: Array<String>) {
 
     // Print out the result of the script
     PrinterStdout().printAllTrade(ManagerTradeBook().getTradeList())
-    PrinterStdout().generateOrderTableFormatted(ManagerOrderBook().getOrderList())
+    PrinterStdout().printAllOrder(ManagerOrderBook().getOrderList())
 }
