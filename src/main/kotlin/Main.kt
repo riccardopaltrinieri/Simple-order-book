@@ -1,5 +1,7 @@
 import data.ManagerOrderBook
+import data.ManagerTradeBook
 import file.input.ReaderOrderStdin
+import file.output.PrinterStdout
 import service.TradeService
 
 fun main(args: Array<String>) {
@@ -13,5 +15,6 @@ fun main(args: Array<String>) {
     ManagerOrderBook().storeOrderListNew(orderListUpdated)
 
     // Print out the result of the script
-//    TODO("output result")
+    PrinterStdout().printAllTrade(ManagerTradeBook().getTradeList())
+    PrinterStdout().generateOrderTableFormatted(ManagerOrderBook().getOrderList())
 }

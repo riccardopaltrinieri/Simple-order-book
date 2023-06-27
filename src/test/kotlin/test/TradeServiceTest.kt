@@ -4,8 +4,11 @@ import common.RandomOrderGenerator
 import data.ManagerOrderBook
 import data.ManagerTradeBook
 import file.input.ReaderOrderString
+import file.output.PrinterStdout
+import file.output.PrinterString
 import service.TradeService
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 /**
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
@@ -14,13 +17,13 @@ import kotlin.test.Test
 class TradeServiceTest {
     @Test
     fun testTradeServiceWithRandomInput() {
-        val orderStringList = RandomOrderGenerator().generateOrderInput(10)
+        val orderStringList = RandomOrderGenerator().generateOrderInput(100)
         val orderInput = ReaderOrderString().getOrderInput(orderStringList)
 
         TradeService().computeAllPossibleMatch(orderInput)
 
-        ManagerTradeBook().getTradeList().forEach{ println(it) }
-        ManagerOrderBook().getOrderList().forEach{ println(it) }
+        PrinterStdout().printAllTrade(ManagerTradeBook().getTradeList())
+        PrinterStdout().printAllOrder(ManagerOrderBook().getOrderList())
     }
 
     @Test
@@ -38,7 +41,18 @@ class TradeServiceTest {
 
         TradeService().computeAllPossibleMatch(orderInput)
 
-        ManagerTradeBook().getTradeList().forEach{ println(it) }
-        ManagerOrderBook().getOrderList().forEach{ println(it) }
+        assertEquals(
+            "trade 10006,10001,100,500\n" +
+                    "trade 10006,10002,100,10000\n" +
+                    "trade 10006,10004,103,100\n" +
+                    "trade 10006,10005,105,5400",
+            PrinterString().generateAllTradeString(ManagerTradeBook().getTradeList()),
+        )
+        val actual = PrinterString().generateAllOrderString(ManagerOrderBook().getOrderList())
+        assertEquals(
+            "     50,000     99 |    105      14,600\n" +
+                     "     25,500     98 |                   ",
+            actual,
+        )
     }
 }
