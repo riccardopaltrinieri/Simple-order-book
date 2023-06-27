@@ -1,9 +1,7 @@
 package file.output
 
-import common.OrderType
 import data.model.Order
 import data.model.Trade
-import kotlin.math.max
 
 /**
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
