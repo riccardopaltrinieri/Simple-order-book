@@ -3,6 +3,8 @@ package test
 import common.RandomOrderGenerator
 import data.ManagerOrderBook
 import data.ManagerTradeBook
+import data.repository.RepositoryOrderSql
+import data.repository.RepositoryTradeSql
 import file.input.ReaderOrderString
 import file.output.PrinterStdout
 import file.output.PrinterString
@@ -24,6 +26,20 @@ class TradeServiceTest {
 
         PrinterStdout().printAllTrade(ManagerTradeBook().getTradeList())
         PrinterStdout().printAllOrder(ManagerOrderBook().getOrderList())
+    }
+
+    @Test
+    fun testTradeServiceWithRandomInputAndRepositorySql() {
+        val orderStringList = RandomOrderGenerator().generateOrderInput(100)
+        val orderInput = ReaderOrderString().getOrderInput(orderStringList)
+
+        val managerOrderBook = ManagerOrderBook(RepositoryOrderSql())
+        val managerTradeBook = ManagerTradeBook(RepositoryTradeSql())
+
+        TradeService(managerOrderBook, managerTradeBook).computeAllPossibleMatch(orderInput)
+
+        PrinterStdout().printAllTrade(managerTradeBook.getTradeList())
+        PrinterStdout().printAllOrder(managerOrderBook.getOrderList())
     }
 
     @Test
