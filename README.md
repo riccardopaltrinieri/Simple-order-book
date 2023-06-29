@@ -26,6 +26,13 @@ To use the order book software, follow the steps below:
    cd kotlin-order-book
    ./gradlew build
    ```
+   
+3. **Extract the executable:** Run these two commands to extract the executable file from the build:
+
+   ```shell
+   unzip ./build/distributions/bitvavo-exchange-1.0-SNAPSHOT.zip -d ./build/distributions/
+   ln -s build/distributions/bitvavo-exchange-1.0-SNAPSHOT/bin/bitvavo-exchange ./exchange
+   ```
 
 3. **Run the Software:** Once the build is successful, run the order book software with the input file:
 
@@ -34,6 +41,7 @@ To use the order book software, follow the steps below:
    ```
 
    Replace `input.txt` with the path to your input file containing the order data.
+
 
 4. **View the Order Book:** The order book will be displayed in the terminal based on the input provided. The buy and sell orders will be sorted by price in descending order. The order book format will be as follows:
 
