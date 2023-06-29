@@ -17,7 +17,7 @@ class TradeService(
 ) {
     /**
      */
-    fun computeAllPossibleMatch(orderList: List<Order>): List<Order> {
+    fun computeAllPossibleMatch(orderList: MutableList<Order>): MutableList<Order> {
         for (order in orderList) {
             computePossibleMatch(order)
         }
@@ -28,64 +28,64 @@ class TradeService(
     /**
      */
     private fun computePossibleMatch(order: Order) {
-        when (order.type) {
+        val orderAfterMatch = when (order.type) {
             OrderType.SELL -> matchWithAllPotentialBuyer(order)
             OrderType.BUY -> matchWithAllPotentialSeller(order)
         }
 
-        if (order.quantity == 0) {
-            managerOrderBook.remove(order)
-        } else {
-            managerOrderBook.insertOrderNew(order)
+        if (orderAfterMatch != null && orderAfterMatch.quantity != 0) {
+            managerOrderBook.insertOrderNew(orderAfterMatch)
         }
     }
 
     /**
      */
-    private fun matchWithAllPotentialBuyer(orderSell: Order): Boolean {
+    private fun matchWithAllPotentialBuyer(orderSell: Order): Order? {
+        var aggressingOrder = orderSell
         val orderBuyList = managerOrderBook.getOrderList().filter {
             it.type == OrderType.BUY &&
-                    it.price >= orderSell.price
+            it.price >= orderSell.price
         }
 
         for (orderBuy in orderBuyList) {
-            if (orderSell.quantity == 0) {
-                return true
+            if (aggressingOrder.quantity == 0) {
+                return null
             } else if (orderBuy.price >= orderSell.price) {
-                executeTrade(aggressingOrder = orderSell, restingOrder = orderBuy)
+                aggressingOrder = executeTrade(aggressingOrder, restingOrder = orderBuy)
             } else {
                 // no match
             }
         }
 
-        return false
+        return aggressingOrder
     }
 
     /**
      */
-    private fun matchWithAllPotentialSeller(orderBuy: Order): Boolean {
+    private fun matchWithAllPotentialSeller(orderBuy: Order): Order? {
+        var aggressingOrder = orderBuy
         val orderSellList = managerOrderBook.getOrderList().filter {
             it.type == OrderType.SELL &&
-                    it.price <= orderBuy.price
+            it.price <= orderBuy.price
         }
 
         for (orderSell in orderSellList) {
-            if (orderBuy.quantity == 0) {
-                return true
+            if (aggressingOrder.quantity == 0) {
+                return null
             } else if (orderBuy.price >= orderSell.price) {
-                executeTrade(aggressingOrder = orderBuy, restingOrder = orderSell)
+                aggressingOrder = executeTrade(aggressingOrder, restingOrder = orderSell)
             } else {
                 // no match
             }
         }
 
         // the order was not fulfilled, so it should be stored to be matched with the next ones
-        return false
+        return aggressingOrder
     }
 
     /**
      */
-    private fun executeTrade(aggressingOrder: Order, restingOrder: Order): Trade {
+    private fun executeTrade(aggressingOrder: Order, restingOrder: Order): Order {
         val trade = Trade(
             aggressingOrder.id,
             restingOrder.id,
@@ -94,23 +94,17 @@ class TradeService(
         )
 
         managerTradeBook.insertTrade(trade)
-        updateOrderQuantity(restingOrder, trade).also {order ->
-            if (order != null) {
-                managerOrderBook.update(order)
-            }
-        }
+        removeOrderOrUpdateQuantity(restingOrder, trade)
 
-        return trade
+        return aggressingOrder.copy(quantity = aggressingOrder.quantity - trade.quantity)
     }
 
     /**
      */
-    private fun updateOrderQuantity(order: Order, trade: Trade): Order? =
+    private fun removeOrderOrUpdateQuantity(order: Order, trade: Trade) =
         if (order.quantity == trade.quantity) {
             managerOrderBook.remove(order)
-
-            null
         } else {
-            order.copy(quantity =  order.quantity - trade.quantity)
+            managerOrderBook.update(order.copy(quantity = order.quantity - trade.quantity))
         }
 }

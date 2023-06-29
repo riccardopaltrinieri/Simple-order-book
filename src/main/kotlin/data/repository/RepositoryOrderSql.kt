@@ -104,4 +104,19 @@ class RepositoryOrderSql(
             e.printStackTrace()
         }
     }
+
+    /**
+     */
+    fun truncateTable() {
+        val sql = "DELETE FROM `order`"
+        val statement: PreparedStatement = connection.prepareStatement(sql)
+
+        try {
+            statement.execute()
+
+            statement.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

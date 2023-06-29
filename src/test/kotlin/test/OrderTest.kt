@@ -4,7 +4,9 @@ import common.RandomOrderGenerator
 import data.ManagerOrderBook
 import data.repository.RepositoryOrderList
 import data.repository.RepositoryOrderSql
+import data.repository.RepositoryTradeSql
 import file.input.ReaderOrderString
+import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 import kotlin.test.assertContains
 
@@ -13,6 +15,12 @@ import kotlin.test.assertContains
  * @date 20/06/2023
  */
 class OrderTest {
+    @BeforeEach
+    fun clearSqlDatabase() {
+        RepositoryOrderSql().truncateTable()
+        RepositoryTradeSql().truncateTable()
+    }
+
     @Test
     fun testOrderListInsertAndReadWithRepositoryList() {
         val managerOrderBook = ManagerOrderBook(RepositoryOrderList())

@@ -37,11 +37,8 @@ class RepositoryOrderList(
     /**
      */
     override fun updateOrder(order: Order) {
-        orderList.map {
-            when (it.id) {
-                order.id -> order
-                else -> order
-            }
+        orderList.forEachIndexed { index, it ->
+            if (it.id == order.id) orderList[index] = order
         }
     }
 }

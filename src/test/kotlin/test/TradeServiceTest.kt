@@ -8,6 +8,7 @@ import data.repository.RepositoryTradeSql
 import file.input.ReaderOrderString
 import file.output.PrinterStdout
 import file.output.PrinterString
+import org.junit.jupiter.api.BeforeEach
 import service.TradeService
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,6 +18,12 @@ import kotlin.test.assertEquals
  * @date 22/06/2023
  */
 class TradeServiceTest {
+    @BeforeEach
+    fun clearSqlDatabase() {
+        RepositoryOrderSql().truncateTable()
+        RepositoryTradeSql().truncateTable()
+    }
+
     @Test
     fun testTradeServiceWithRandomInput() {
         val orderStringList = RandomOrderGenerator().generateOrderInput(100)
@@ -64,11 +71,10 @@ class TradeServiceTest {
                     "trade 10006,10005,105,5400",
             PrinterString().generateAllTradeString(ManagerTradeBook().getTradeList()),
         )
-        val actual = PrinterString().generateAllOrderString(ManagerOrderBook().getOrderList())
         assertEquals(
             "     50,000     99 |    105      14,600\n" +
                      "     25,500     98 |                   ",
-            actual,
+            PrinterString().generateAllOrderString(ManagerOrderBook().getOrderList()),
         )
     }
 }

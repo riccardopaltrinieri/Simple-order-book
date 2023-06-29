@@ -35,7 +35,7 @@ class RepositoryTradeSql(
     /**
      */
     override fun getTradeList(): MutableList<Trade> {
-        val sql = "SELECT * FROM `trade` ORDER BY id"
+        val sql = "SELECT * FROM `trade`"
         val statement: PreparedStatement = connection.prepareStatement(sql)
         val resultSet: ResultSet = statement.executeQuery()
 
@@ -54,5 +54,20 @@ class RepositoryTradeSql(
         statement.close()
 
         return tradeList
+    }
+
+    /**
+     */
+    fun truncateTable() {
+        val sql = "DELETE FROM `trade`"
+        val statement: PreparedStatement = connection.prepareStatement(sql)
+
+        try {
+            statement.execute()
+
+            statement.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
