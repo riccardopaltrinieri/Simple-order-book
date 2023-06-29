@@ -79,7 +79,3 @@ trade 10006,10005,105,5400
 In this example, the order book shows the buy and sell orders at different price levels. The buy orders are sorted in descending order of price, and the sell orders are sorted in ascending order of price.
 
 Feel free to replace `test1.txt` with your own input file and explore the order book software.
-
-## License
-
-This order book software is released under the [MIT License](https://opensource.org/license/mit/). Feel free to modify and distribute it according to your needs.
