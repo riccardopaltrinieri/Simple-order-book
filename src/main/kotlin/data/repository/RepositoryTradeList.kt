@@ -19,4 +19,10 @@ class RepositoryTradeList(
     /**
      */
     override fun getTradeList(): MutableList<Trade> = tradeList
+
+    /**
+     */
+    override fun clearStorage() {
+        tradeList.clear()
+    }
 }

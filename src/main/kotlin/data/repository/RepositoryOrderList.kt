@@ -41,4 +41,10 @@ class RepositoryOrderList(
             if (it.id == order.id) orderList[index] = order.copy(quantity = quantity)
         }
     }
+
+    /**
+     */
+    override fun clearStorage() {
+        orderList.clear()
+    }
 }

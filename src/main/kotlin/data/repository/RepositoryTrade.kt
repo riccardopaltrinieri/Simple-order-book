@@ -14,4 +14,8 @@ interface RepositoryTrade {
     /**
      */
     fun getTradeList(): MutableList<Trade>
+
+    /**
+     */
+    fun clearStorage()
 }

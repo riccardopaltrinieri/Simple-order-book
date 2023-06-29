@@ -22,4 +22,8 @@ interface RepositoryOrder {
     /**
      */
     fun updateOrderQuantity(order: Order, quantity: Int)
+
+    /**
+     */
+    fun clearStorage()
 }

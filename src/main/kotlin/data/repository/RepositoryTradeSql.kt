@@ -58,7 +58,7 @@ class RepositoryTradeSql(
 
     /**
      */
-    fun truncateTable() {
+    override fun clearStorage() {
         val sql = "DELETE FROM `trade`"
         val statement: PreparedStatement = connection.prepareStatement(sql)
 

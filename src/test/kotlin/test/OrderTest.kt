@@ -4,9 +4,10 @@ import common.RandomOrderGenerator
 import data.ManagerOrderBook
 import data.repository.RepositoryOrderList
 import data.repository.RepositoryOrderSql
+import data.repository.RepositoryTradeList
 import data.repository.RepositoryTradeSql
 import file.input.ReaderOrderString
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.BeforeAll
 import kotlin.test.Test
 import kotlin.test.assertContains
 
@@ -15,13 +16,18 @@ import kotlin.test.assertContains
  * @date 20/06/2023
  */
 class OrderTest {
-    /**
-     * Not needed for testing persistent storage, but nice to have.
-     */
-    @BeforeEach
-    fun clearSqlDatabase() {
-        RepositoryOrderSql().truncateTable()
-        RepositoryTradeSql().truncateTable()
+    companion object {
+        /**
+         * Not needed for testing persistent storage, but needed for the test with example input.
+         */
+        @BeforeAll
+        @JvmStatic
+        fun clearSqlDatabase() {
+            RepositoryOrderSql().clearStorage()
+            RepositoryTradeSql().clearStorage()
+            RepositoryOrderList().clearStorage()
+            RepositoryTradeList().clearStorage()
+        }
     }
 
     @Test

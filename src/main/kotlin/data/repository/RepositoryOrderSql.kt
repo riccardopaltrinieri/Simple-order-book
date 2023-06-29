@@ -107,7 +107,7 @@ class RepositoryOrderSql(
 
     /**
      */
-    fun truncateTable() {
+    override fun clearStorage() {
         val sql = "DELETE FROM `order`"
         val statement: PreparedStatement = connection.prepareStatement(sql)
 

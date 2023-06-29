@@ -24,7 +24,7 @@ To use the order book software, follow the steps below:
 
    ```shell
    cd kotlin-order-book
-   gradle build
+   ./gradlew build
    ```
 
 3. **Run the Software:** Once the build is successful, run the order book software with the input file:
