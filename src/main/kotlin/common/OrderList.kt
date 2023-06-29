@@ -13,7 +13,5 @@ object OrderList {
 
     /**
      */
-    private fun create(): MutableList<Order> {
-        return mutableListOf()
-    }
+    private fun create(): MutableList<Order> = mutableListOf()
 }

@@ -21,5 +21,5 @@ interface RepositoryOrder {
 
     /**
      */
-    fun updateOrder(order: Order)
+    fun updateOrderQuantity(order: Order, quantity: Int)
 }

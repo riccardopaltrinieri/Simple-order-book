@@ -49,14 +49,16 @@ class TradeService(
 
         for (orderBuy in orderBuyList) {
             if (aggressingOrder.quantity == 0) {
+                // If the order has been fulfilled stop the matching
                 return null
             } else if (orderBuy.price >= orderSell.price) {
                 aggressingOrder = executeTrade(aggressingOrder, restingOrder = orderBuy)
             } else {
-                // no match
+                // No match
             }
         }
 
+        // The order was not fulfilled, so it should be stored to be matched with the next ones
         return aggressingOrder
     }
 
@@ -71,15 +73,16 @@ class TradeService(
 
         for (orderSell in orderSellList) {
             if (aggressingOrder.quantity == 0) {
+                // If the order has been fulfilled stop the matching
                 return null
             } else if (orderBuy.price >= orderSell.price) {
                 aggressingOrder = executeTrade(aggressingOrder, restingOrder = orderSell)
             } else {
-                // no match
+                // No match
             }
         }
 
-        // the order was not fulfilled, so it should be stored to be matched with the next ones
+        // The order was not fulfilled, so it should be stored to be matched with the next ones
         return aggressingOrder
     }
 
@@ -105,6 +108,6 @@ class TradeService(
         if (order.quantity == trade.quantity) {
             managerOrderBook.remove(order)
         } else {
-            managerOrderBook.update(order.copy(quantity = order.quantity - trade.quantity))
+            managerOrderBook.updateOrderQuantity(order, quantity = order.quantity - trade.quantity)
         }
 }

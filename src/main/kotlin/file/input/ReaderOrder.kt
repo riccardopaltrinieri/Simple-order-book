@@ -21,6 +21,7 @@ abstract class ReaderOrder {
     /**
      */
     fun parseOrderFromString(line: String): Order {
+        validateString(line)
         val values = line.split(",")
 
         val id = values[0]
@@ -30,6 +31,18 @@ abstract class ReaderOrder {
         val quantity = values[3].toInt()
 
         return Order(id, createdAt, type, price, quantity)
+    }
+
+    /**
+     */
+    private fun validateString(line: String) {
+        val pattern = Regex("\\d+,[S,B],\\d+,\\d+")
+
+        if (pattern.matches(line)) {
+            // Ok.
+        } else {
+            throw IllegalArgumentException("The string provided does not match the format {id,type,price,quantity}.")
+        }
     }
 
     /**

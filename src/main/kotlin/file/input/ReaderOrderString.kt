@@ -10,7 +10,7 @@ class ReaderOrderString: ReaderOrder() {
     /**
      */
     override fun getOrderInput(): MutableList<Order> =
-        throw NotImplementedError()
+        throw NotImplementedError("ReaderOrderString needs a list of strings as parameter")
 
     /**
      */

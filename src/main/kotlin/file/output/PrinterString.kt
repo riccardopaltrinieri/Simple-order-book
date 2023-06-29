@@ -11,12 +11,16 @@ class PrinterString: Printer() {
     /**
      */
     override fun printAllTrade(tradeList: MutableList<Trade>) =
-        throw NotImplementedError()
+        // This can be handled in a nicer way, but since it is used only for testing
+        // in this assignment an exception is enough.
+        throw NotImplementedError("Use generateAllTradeString instead")
 
     /**
      */
     override fun printAllOrder(orderList: MutableList<Order>) =
-        throw NotImplementedError()
+        // This can be handled in a nicer way, but since it is used only for testing
+        // in this assignment an exception is enough.
+        throw NotImplementedError("Use generateAllOrderString instead")
 
     /**
      */

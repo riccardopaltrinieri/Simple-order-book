@@ -17,7 +17,7 @@ import java.time.Instant
  * @date 20/06/2023
  */
 class RepositoryOrderSql(
-    private val connection: Connection = DataConnectionSqlLite.getConnection()
+    private val connection: Connection = DataConnectionSqlLite.connection
 ): RepositoryOrder {
     /**
      */
@@ -90,12 +90,12 @@ class RepositoryOrderSql(
 
     /**
      */
-    override fun updateOrder(order: Order) {
+    override fun updateOrderQuantity(order: Order, quantity: Int) {
         val sql = "UPDATE `order` SET quantity = (?) WHERE id = (?);"
         val statement: PreparedStatement = connection.prepareStatement(sql)
 
         try {
-            statement.setInt(1, order.quantity)
+            statement.setInt(1, quantity)
             statement.setString(2, order.id)
             statement.executeUpdate()
 

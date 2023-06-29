@@ -15,6 +15,9 @@ import kotlin.test.assertContains
  * @date 20/06/2023
  */
 class OrderTest {
+    /**
+     * Not needed for testing persistent storage, but nice to have.
+     */
     @BeforeEach
     fun clearSqlDatabase() {
         RepositoryOrderSql().truncateTable()

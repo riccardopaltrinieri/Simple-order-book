@@ -6,22 +6,13 @@ import java.sql.DriverManager
  * @date 20/06/2023
  */
 object DataConnectionSqlLite {
-    private var connection: Connection? = null
-
-    /**
-     */
-    fun getConnection(): Connection {
-        if (connection == null || connection?.isClosed == true) {
-            // Establish a new connection if it doesn't exist or is closed
-            connection = createConnection()
-        }
-
-        return connection!!
+    val connection: Connection by lazy {
+        create()
     }
 
     /**
      */
-    private fun createConnection(): Connection {
+    private fun create(): Connection {
         val jdbcUrl = "jdbc:sqlite:src/main/resources/database/database.sqlite"
 
         return DriverManager.getConnection(jdbcUrl)

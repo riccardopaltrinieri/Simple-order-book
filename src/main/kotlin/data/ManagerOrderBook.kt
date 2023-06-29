@@ -35,7 +35,7 @@ class ManagerOrderBook(
 
     /**
      */
-    fun update(order: Order) {
-        repository.updateOrder(order)
+    fun updateOrderQuantity(order: Order, quantity: Int) {
+        repository.updateOrderQuantity(order, quantity)
     }
 }

@@ -10,7 +10,7 @@ import java.sql.ResultSet
  * @date 22/06/2023
  */
 class RepositoryTradeSql(
-    private val connection: Connection = DataConnectionSqlLite.getConnection()
+    private val connection: Connection = DataConnectionSqlLite.connection
 ): RepositoryTrade {
     /**
      */

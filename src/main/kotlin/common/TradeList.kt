@@ -13,7 +13,5 @@ object TradeList {
 
     /**
      */
-    private fun create(): MutableList<Trade> {
-        return mutableListOf()
-    }
+    private fun create(): MutableList<Trade> = mutableListOf()
 }

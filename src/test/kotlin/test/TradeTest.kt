@@ -17,13 +17,20 @@ import kotlin.test.assertEquals
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 22/06/2023
  */
-class TradeServiceTest {
+class TradeTest {
+    /**
+     * Not needed for testing persistent storage, but nice to have.
+     */
     @BeforeEach
     fun clearSqlDatabase() {
         RepositoryOrderSql().truncateTable()
         RepositoryTradeSql().truncateTable()
     }
 
+    /**
+     * Only checks the validity of the code, not the validity of the result. With more time
+     * I would have added proper assertion on every order and trade
+     */
     @Test
     fun testTradeServiceWithRandomInput() {
         val orderStringList = RandomOrderGenerator().generateOrderInput(100)

@@ -36,9 +36,9 @@ class RepositoryOrderList(
 
     /**
      */
-    override fun updateOrder(order: Order) {
+    override fun updateOrderQuantity(order: Order, quantity: Int) {
         orderList.forEachIndexed { index, it ->
-            if (it.id == order.id) orderList[index] = order
+            if (it.id == order.id) orderList[index] = order.copy(quantity = quantity)
         }
     }
 }

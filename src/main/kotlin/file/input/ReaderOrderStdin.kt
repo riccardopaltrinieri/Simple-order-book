@@ -28,5 +28,5 @@ class ReaderOrderStdin: ReaderOrder() {
     /**
      */
     override fun getOrderInput(orderStringList: List<String>): MutableList<Order> =
-        throw NotImplementedError()
+        throw NotImplementedError("ReaderOrderStdin reads the input from Stdin")
 }
