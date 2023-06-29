@@ -9,9 +9,8 @@ import data.model.Order
 class ReaderOrderString: ReaderOrder() {
     /**
      */
-    override fun getOrderInput(): MutableList<Order> {
+    override fun getOrderInput(): MutableList<Order> =
         throw NotImplementedError()
-    }
 
     /**
      */

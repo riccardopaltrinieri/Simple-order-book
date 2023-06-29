@@ -27,7 +27,6 @@ class ReaderOrderStdin: ReaderOrder() {
 
     /**
      */
-    override fun getOrderInput(orderStringList: List<String>): MutableList<Order> {
-        TODO("Not yet implemented")
-    }
+    override fun getOrderInput(orderStringList: List<String>): MutableList<Order> =
+        throw NotImplementedError()
 }

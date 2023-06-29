@@ -44,13 +44,13 @@ abstract class Printer {
      */
     private fun generateOrderStringListFormatted(orderList: MutableList<Order>, orderType: OrderType): List<String> =
         orderList
-            .filter { it.getType() == orderType }
+            .filter { it.type == orderType }
             .map { order ->
-                val price = order.getPrice()
+                val price = order.price
                     .toString()
                     .padStart(6, ' ')
 
-                val quantity = NumberFormat.getNumberInstance(Locale.US).format(order.getQuantity())
+                val quantity = NumberFormat.getNumberInstance(Locale.US).format(order.quantity)
                     .toString()
                     .padStart(11, ' ')
 
@@ -65,9 +65,9 @@ abstract class Printer {
      */
     fun generateTradeStringFormatted(trade: Trade) =
         "trade %s,%s,%s,%s".format(
-            trade.getAggressingOrderId(),
-            trade.getRestingOrderId(),
-            trade.getPrice(),
-            trade.getQuantity(),
+            trade.aggressingOrderId,
+            trade.restingOrderId,
+            trade.price,
+            trade.quantity,
         )
 }

@@ -6,6 +6,7 @@ import data.model.Order
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet
+import java.time.Instant
 
 /**
  * This repository stores all the orders and trades inside a SQLLite file/database. Choose this option if the
@@ -26,11 +27,11 @@ class RepositoryOrderSql(
         val statement: PreparedStatement = connection.prepareStatement(sql)
 
         try {
-            statement.setString(1, order.getId())
-            statement.setTimestamp(2, java.sql.Timestamp(order.getCreatedAt().toEpochMilli()))
-            statement.setString(3, order.getType().name)
-            statement.setInt(4, order.getPrice())
-            statement.setInt(5, order.getQuantity())
+            statement.setString(1, order.id)
+            statement.setString(2, order.createdAt.toString())
+            statement.setString(3, order.type.name)
+            statement.setInt(4, order.price)
+            statement.setInt(5, order.quantity)
             statement.executeUpdate()
 
             statement.close()
@@ -42,7 +43,7 @@ class RepositoryOrderSql(
     /**
      */
     override fun getOrderList(): MutableList<Order> {
-        val sql = "SELECT * FROM `order`;"
+        val sql = "SELECT * FROM `order` ORDER BY price DESC, created_at;"
         val statement: PreparedStatement = connection.prepareStatement(sql)
         val resultSet: ResultSet = statement.executeQuery()
 
@@ -50,14 +51,14 @@ class RepositoryOrderSql(
 
         while (resultSet.next()) {
             val id = resultSet.getString("id")
-            val createdAt = resultSet.getTimestamp("created_at")
+            val createdAt = resultSet.getString("created_at")
             val type = resultSet.getString("type")
             val price = resultSet.getInt("price")
             val quantity = resultSet.getInt("quantity")
 
             val order = Order(
                 id,
-                createdAt.toInstant(),
+                Instant.parse(createdAt),
                 OrderType.valueOf(type),
                 price,
                 quantity
@@ -78,7 +79,24 @@ class RepositoryOrderSql(
         val statement: PreparedStatement = connection.prepareStatement(sql)
 
         try {
-            statement.setString(1, order.getId())
+            statement.setString(1, order.id)
+            statement.executeUpdate()
+
+            statement.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     */
+    override fun updateOrder(order: Order) {
+        val sql = "UPDATE `order` SET quantity = (?) WHERE id = (?);"
+        val statement: PreparedStatement = connection.prepareStatement(sql)
+
+        try {
+            statement.setInt(1, order.quantity)
+            statement.setString(2, order.id)
             statement.executeUpdate()
 
             statement.close()

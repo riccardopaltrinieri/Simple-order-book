@@ -5,18 +5,19 @@ import data.ManagerOrderBook
 import data.ManagerTradeBook
 import data.model.Order
 import data.model.Trade
+import kotlin.math.min
 
 /**
  * @author Riccardo Paltrinieri <riccardo@paltrinieri.it>
  * @date 22/06/2023
  */
 class TradeService(
-    private var managerOrderBook: ManagerOrderBook = ManagerOrderBook(),
+    private val managerOrderBook: ManagerOrderBook = ManagerOrderBook(),
     private val managerTradeBook: ManagerTradeBook = ManagerTradeBook()
 ) {
     /**
      */
-    fun computeAllPossibleMatch(orderList: MutableList<Order>): MutableList<Order> {
+    fun computeAllPossibleMatch(orderList: List<Order>): List<Order> {
         for (order in orderList) {
             computePossibleMatch(order)
         }
@@ -27,15 +28,12 @@ class TradeService(
     /**
      */
     private fun computePossibleMatch(order: Order) {
-        if (order.getType() == OrderType.SELL) {
-            matchWithAllPotentialBuyer(order)
-        } else if (order.getType() == OrderType.BUY) {
-            matchWithAllPotentialSeller(order)
-        } else {
-            throw IllegalArgumentException("Unexpected order type ${order.getType()}")
+        when (order.type) {
+            OrderType.SELL -> matchWithAllPotentialBuyer(order)
+            OrderType.BUY -> matchWithAllPotentialSeller(order)
         }
 
-        if (order.getQuantity() == 0) {
+        if (order.quantity == 0) {
             managerOrderBook.remove(order)
         } else {
             managerOrderBook.insertOrderNew(order)
@@ -46,15 +44,15 @@ class TradeService(
      */
     private fun matchWithAllPotentialBuyer(orderSell: Order): Boolean {
         val orderBuyList = managerOrderBook.getOrderList().filter {
-            it.getType() == OrderType.BUY &&
-            it.getPrice() >= orderSell.getPrice()
+            it.type == OrderType.BUY &&
+                    it.price >= orderSell.price
         }
 
         for (orderBuy in orderBuyList) {
-            if (orderSell.getQuantity() == 0) {
+            if (orderSell.quantity == 0) {
                 return true
-            } else if (orderBuy.getPrice() >= orderSell.getPrice()) {
-                 executeTrade(aggressingOrder = orderSell, restingOrder = orderBuy)
+            } else if (orderBuy.price >= orderSell.price) {
+                executeTrade(aggressingOrder = orderSell, restingOrder = orderBuy)
             } else {
                 // no match
             }
@@ -67,14 +65,14 @@ class TradeService(
      */
     private fun matchWithAllPotentialSeller(orderBuy: Order): Boolean {
         val orderSellList = managerOrderBook.getOrderList().filter {
-            it.getType() == OrderType.SELL &&
-            it.getPrice() <= orderBuy.getPrice()
+            it.type == OrderType.SELL &&
+                    it.price <= orderBuy.price
         }
 
         for (orderSell in orderSellList) {
-            if (orderBuy.getQuantity() == 0) {
+            if (orderBuy.quantity == 0) {
                 return true
-            } else if (orderBuy.getPrice() >= orderSell.getPrice()) {
+            } else if (orderBuy.price >= orderSell.price) {
                 executeTrade(aggressingOrder = orderBuy, restingOrder = orderSell)
             } else {
                 // no match
@@ -87,21 +85,32 @@ class TradeService(
 
     /**
      */
-    private fun executeTrade(aggressingOrder: Order,  restingOrder: Order): Trade {
-        val trade = managerTradeBook.insertTrade(aggressingOrder, restingOrder)
-        updateOrderQuantity(restingOrder, trade)
-        aggressingOrder.setQuantity(aggressingOrder.getQuantity() - trade.getQuantity())
+    private fun executeTrade(aggressingOrder: Order, restingOrder: Order): Trade {
+        val trade = Trade(
+            aggressingOrder.id,
+            restingOrder.id,
+            min(aggressingOrder.price, restingOrder.price),
+            min(aggressingOrder.quantity, restingOrder.quantity),
+        )
+
+        managerTradeBook.insertTrade(trade)
+        updateOrderQuantity(restingOrder, trade).also {order ->
+            if (order != null) {
+                managerOrderBook.update(order)
+            }
+        }
 
         return trade
     }
 
     /**
      */
-    private fun updateOrderQuantity(order: Order, trade: Trade) {
-        if (order.getQuantity() == trade.getQuantity()) {
+    private fun updateOrderQuantity(order: Order, trade: Trade): Order? =
+        if (order.quantity == trade.quantity) {
             managerOrderBook.remove(order)
+
+            null
         } else {
-            order.setQuantity(order.getQuantity() - trade.getQuantity())
+            order.copy(quantity =  order.quantity - trade.quantity)
         }
-    }
 }

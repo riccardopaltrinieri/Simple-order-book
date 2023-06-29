@@ -7,16 +7,8 @@ import data.model.Trade
  * @date 26/06/2023
  */
 object TradeList {
-    private var tradeList: MutableList<Trade>? = null
-
-    /**
-     */
-    fun get(): MutableList<Trade> {
-        if (tradeList == null) {
-            tradeList = create()
-        }
-
-        return tradeList!!
+    val tradeList: MutableList<Trade> by lazy {
+        create()
     }
 
     /**

@@ -5,24 +5,8 @@ package data.model
  * @date 19/06/2023
  */
 data class Trade(
-    private val aggressingOrderId: String,
-    private val restingOrderId: String,
-    private val price: Int,
-    private val quantity: Int,
-) {
-    fun getAggressingOrderId(): String {
-        return this.aggressingOrderId
-    }
-
-    fun getRestingOrderId(): String {
-        return this.restingOrderId
-    }
-
-    fun getPrice(): Int {
-        return this.price
-    }
-
-    fun getQuantity(): Int {
-        return this.quantity
-    }
-}
+    val aggressingOrderId: String,
+    val restingOrderId: String,
+    val price: Int,
+    val quantity: Int,
+)

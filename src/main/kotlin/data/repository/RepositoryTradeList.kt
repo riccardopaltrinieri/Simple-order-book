@@ -8,7 +8,7 @@ import data.model.Trade
  * @date 22/06/2023
  */
 class RepositoryTradeList(
-    private var tradeList: MutableList<Trade> = TradeList.get()
+    private var tradeList: MutableList<Trade> = TradeList.tradeList
 ): RepositoryTrade {
     /**
      */
@@ -18,7 +18,5 @@ class RepositoryTradeList(
 
     /**
      */
-    override fun getTradeList(): MutableList<Trade> {
-        return tradeList
-    }
+    override fun getTradeList(): MutableList<Trade> = tradeList
 }

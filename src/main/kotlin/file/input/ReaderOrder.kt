@@ -24,7 +24,7 @@ abstract class ReaderOrder {
         val values = line.split(",")
 
         val id = values[0]
-        val createdAt = Instant.now().truncatedTo(ChronoUnit.SECONDS)
+        val createdAt = Instant.now()
         val type = parseOrderType(values[1])
         val price = values[2].toInt()
         val quantity = values[3].toInt()
@@ -34,11 +34,10 @@ abstract class ReaderOrder {
 
     /**
      */
-    private fun parseOrderType(type: String): OrderType {
-        return when (type) {
+    private fun parseOrderType(type: String): OrderType =
+        when (type) {
             "B" -> OrderType.BUY
             "S" -> OrderType.SELL
             else -> throw IllegalArgumentException("Unknown order type $type")
         }
-    }
 }

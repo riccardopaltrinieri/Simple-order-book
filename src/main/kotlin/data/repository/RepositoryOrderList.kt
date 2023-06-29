@@ -12,27 +12,36 @@ import data.model.Order
  * @date 22/06/2023
  */
 class RepositoryOrderList(
-    private var orderList: MutableList<Order> = OrderList.get()
+    private var orderList: MutableList<Order> = OrderList.orderList
 ): RepositoryOrder {
     /**
      */
     override fun insertOrder(order: Order) {
         val insertionIndex = orderList.indexOfLast {
-            it.getPrice() < order.getPrice() ||
-            (it.getPrice() == order.getPrice() && it.getCreatedAt().isBefore(order.getCreatedAt()))
+            it.price < order.price ||
+            (it.price == order.price && it.createdAt.isBefore(order.createdAt))
         } + 1
         orderList.add(insertionIndex, order)
     }
 
     /**
      */
-    override fun getOrderList(): MutableList<Order> {
-        return orderList
-    }
+    override fun getOrderList(): MutableList<Order> = orderList
 
     /**
      */
     override fun removeOrder(order: Order) {
         orderList.remove(order)
+    }
+
+    /**
+     */
+    override fun updateOrder(order: Order) {
+        orderList.map {
+            when (it.id) {
+                order.id -> order
+                else -> order
+            }
+        }
     }
 }

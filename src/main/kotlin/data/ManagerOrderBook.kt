@@ -13,9 +13,7 @@ class ManagerOrderBook(
 ) {
     /**
      */
-    fun getOrderList(): MutableList<Order> {
-        return repository.getOrderList()
-    }
+    fun getOrderList(): MutableList<Order> = repository.getOrderList()
 
     /**
      */
@@ -33,5 +31,11 @@ class ManagerOrderBook(
      */
     fun remove(order: Order) {
         repository.removeOrder(order)
+    }
+
+    /**
+     */
+    fun update(order: Order) {
+        repository.updateOrder(order)
     }
 }

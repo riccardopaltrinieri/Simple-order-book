@@ -20,10 +20,10 @@ class RepositoryTradeSql(
         val statement: PreparedStatement = connection.prepareStatement(sql)
 
         try {
-            statement.setString(1, trade.getAggressingOrderId())
-            statement.setString(2, trade.getRestingOrderId())
-            statement.setInt(3, trade.getPrice())
-            statement.setInt(4, trade.getQuantity())
+            statement.setString(1, trade.aggressingOrderId)
+            statement.setString(2, trade.restingOrderId)
+            statement.setInt(3, trade.price)
+            statement.setInt(4, trade.quantity)
             statement.executeUpdate()
 
             statement.close()

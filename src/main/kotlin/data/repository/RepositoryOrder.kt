@@ -18,4 +18,8 @@ interface RepositoryOrder {
     /**
      */
     fun removeOrder(order: Order)
+
+    /**
+     */
+    fun updateOrder(order: Order)
 }

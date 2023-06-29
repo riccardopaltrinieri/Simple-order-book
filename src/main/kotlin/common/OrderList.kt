@@ -7,16 +7,8 @@ import data.model.Order
  * @date 26/06/2023
  */
 object OrderList {
-    private var orderList: MutableList<Order>? = null
-
-    /**
-     */
-    fun get(): MutableList<Order> {
-        if (orderList == null) {
-            orderList = create()
-        }
-
-        return orderList!!
+    val orderList: MutableList<Order> by lazy {
+        create()
     }
 
     /**

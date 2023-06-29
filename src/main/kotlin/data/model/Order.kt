@@ -8,33 +8,9 @@ import java.time.Instant
  * @date 18/06/2023
  */
 data class Order(
-    private val id: String,
-    private val createdAt: Instant,
-    private val type: OrderType,
-    private val price: Int,
-    private var quantity: Int,
-) {
-    fun getId(): String {
-        return this.id
-    }
-
-    fun getCreatedAt(): Instant {
-        return this.createdAt
-    }
-
-    fun getType(): OrderType {
-        return this.type
-    }
-
-    fun getPrice(): Int {
-        return this.price
-    }
-
-    fun getQuantity(): Int {
-        return this.quantity
-    }
-
-    fun setQuantity(quantity: Int) {
-        this.quantity = quantity
-    }
-}
+    val id: String,
+    val createdAt: Instant,
+    val type: OrderType,
+    val price: Int,
+    val quantity: Int,
+)
